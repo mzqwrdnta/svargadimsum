@@ -1,0 +1,265 @@
+# SVARGA DIMSUM – AI MIGRATION AGENT RULES
+
+# DOMAIN: https://svargadimsum.vercel.app/
+
+## 🎯 OBJECTIVE
+
+Migrate existing HTML, CSS, JS website into Next.js (App Router) with:
+
+* ZERO design change
+* ZERO feature loss
+* Improved SEO (Google-compliant)
+* Optimized performance using SSR, SSG, CSR appropriately
+
+---
+
+## 🚫 HARD RESTRICTIONS (ABSOLUTE – NO EXCEPTION)
+
+1. DO NOT change:
+
+   * UI design (layout, spacing, color, typography)
+   * Component structure (visual hierarchy must remain identical)
+   * Existing features or functionality
+   * Content wording unless explicitly required for SEO
+
+2. DO NOT:
+
+   * Add new UI components
+   * Remove existing sections
+   * Replace design system (unless explicitly instructed)
+
+3. ALL migrations must be:
+
+   * Pixel-accurate
+   * Functionally identical
+
+---
+
+## 🧱 MIGRATION STRUCTURE
+
+### Convert HTML → Next.js Components
+
+RULES:
+
+* Each section becomes reusable component
+* No inline HTML dumping
+* Maintain semantic HTML (header, section, footer)
+
+Example structure:
+
+```
+/app
+  /page.js
+/components
+  Header.jsx
+  Hero.jsx
+  Menu.jsx
+  Footer.jsx
+```
+
+---
+
+## ⚙️ RENDERING STRATEGY (MANDATORY)
+
+### SSG (Static Site Generation)
+
+USE FOR:
+
+* Landing page
+* Menu page
+* Outlet page
+* Static content
+
+GOAL:
+
+* Fast load
+* SEO friendly
+
+---
+
+### SSR (Server Side Rendering)
+
+USE FOR:
+
+* Dynamic content (if any future feature added)
+* Real-time data
+
+---
+
+### CSR (Client Side Rendering)
+
+USE ONLY WHEN:
+
+* Interactive UI required
+* Cart / state / animations
+
+⚠️ DO NOT convert everything into CSR
+
+---
+
+## 🧭 ROUTING RULES
+
+USE clean URLs:
+
+GOOD:
+
+* /menu/dimsum-mentai
+* /outlet/cilodong
+
+BAD:
+
+* /menu?id=1
+* /page?slug=abc
+
+---
+
+## 🔍 SEO STANDARDS (STRICT – GOOGLE COMPLIANT)
+
+### Every page MUST have:
+
+* Unique title
+* Unique meta description
+* Proper heading structure (H1 only one per page)
+
+Example:
+
+```js
+export const metadata = {
+  title: "Dimsum Mentai | Svarga Dimsum",
+  description: "Dimsum mentai creamy dan gurih di Svarga Dimsum.",
+};
+```
+
+---
+
+### Dynamic SEO (REQUIRED for scalability)
+
+Use:
+
+```js
+export async function generateMetadata({ params }) {
+```
+
+---
+
+### IMAGE SEO
+
+* Use Next.js `<Image />`
+* MUST include `alt`
+* File size optimized
+
+---
+
+## 🗺️ SITEMAP RULES (CRITICAL – FIX CURRENT ERROR)
+
+### MUST generate valid sitemap.xml
+
+Location:
+
+```
+/app/sitemap.js
+```
+
+Example:
+
+```js
+export default function sitemap() {
+  return [
+    {
+      url: 'https://svargadimsum.vercel.app/',
+      lastModified: new Date(),
+    },
+    {
+      url: 'https://svargadimsum.vercel.app/menu',
+      lastModified: new Date(),
+    },
+    {
+      url: 'https://svargadimsum.vercel.app/outlet',
+      lastModified: new Date(),
+    },
+  ];
+}
+```
+
+---
+
+### RULES:
+
+* MUST return valid array
+* MUST include full absolute URL
+* MUST NOT return empty
+* MUST NOT return invalid routes
+
+---
+
+## 🤖 ROBOTS.TXT (MANDATORY)
+
+Create:
+
+```
+/public/robots.txt
+```
+
+Content:
+
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://svargadimsum.vercel.app/sitemap.xml
+```
+
+---
+
+## 🔐 SECURITY STANDARDS
+
+* Sanitize all inputs
+* Avoid exposing API keys
+* Use environment variables (.env)
+* Prevent XSS (no dangerouslySetInnerHTML unless necessary)
+* Use HTTPS only (already handled by Vercel)
+
+---
+
+## ⚡ PERFORMANCE RULES
+
+* Use Next.js Image Optimization
+* Avoid unnecessary client components
+* Lazy load non-critical components
+* Minimize JS bundle size
+
+---
+
+## 🧪 VALIDATION CHECKLIST
+
+Before deployment:
+
+* [ ] All pages render correctly
+* [ ] No layout shift
+* [ ] SEO metadata exists per page
+* [ ] Sitemap accessible at /sitemap.xml
+* [ ] Robots.txt accessible
+* [ ] No console error
+* [ ] Lighthouse score ≥ 90
+
+---
+
+## 🚨 FAILURE CONDITIONS
+
+Migration is INVALID if:
+
+* Design differs from original
+* Any feature is broken
+* Sitemap error appears in Google Search Console
+* Metadata duplicated
+* Page not indexed
+
+---
+
+## 🧠 FINAL PRINCIPLE
+
+“Preserve everything. Improve silently.”
+
+DO NOT innovate.
+DO NOT redesign.
+ONLY optimize structure, SEO, and performance.

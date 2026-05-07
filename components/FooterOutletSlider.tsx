@@ -1,0 +1,133 @@
+"use client";
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { outlets } from '@/data/outlets';
+
+export default function FooterOutletSlider() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const router = useRouter();
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? outlets.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === outlets.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const currentOutlet = outlets[currentIndex];
+
+  const handleImageClick = () => {
+    router.push(`/outlet/${currentOutlet.slug}`);
+  };
+
+  return (
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <div 
+        style={{ 
+          position: 'relative', 
+          width: '100%', 
+          height: '180px', 
+          borderRadius: '15px', 
+          overflow: 'hidden',
+          cursor: 'pointer',
+          boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+        }}
+        onClick={handleImageClick}
+        title={`Lihat detail cabang ${currentOutlet.name}`}
+      >
+        <img 
+          src={currentOutlet.image} 
+          alt={currentOutlet.name} 
+          style={{ 
+            width: '100%', 
+            height: '100%', 
+            objectFit: 'cover',
+            transition: 'opacity 0.3s'
+          }} 
+        />
+        <div style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: 'linear-gradient(transparent, rgba(0, 0, 0, 0.8))',
+          color: 'white',
+          padding: '15px 10px 10px 10px',
+          textAlign: 'center',
+        }}>
+          <h5 style={{ margin: 0, fontSize: '15px', fontWeight: 'bold' }}>{currentOutlet.name}</h5>
+        </div>
+      </div>
+      
+      {/* Controls below image */}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
+        <button 
+          onClick={handlePrev}
+          style={{
+            background: '#FF6B35',
+            border: 'none',
+            borderRadius: '50%',
+            width: '36px',
+            height: '36px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+            transition: 'transform 0.2s, background 0.2s'
+          }}
+          aria-label="Cabang Sebelumnya"
+          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <i className="fas fa-chevron-left"></i>
+        </button>
+        
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {outlets.map((_, idx) => (
+            <div 
+              key={idx} 
+              style={{
+                width: idx === currentIndex ? '24px' : '8px',
+                height: '8px',
+                borderRadius: '4px',
+                background: idx === currentIndex ? '#FF6B35' : '#E0E0E0',
+                transition: 'all 0.3s ease'
+              }}
+            />
+          ))}
+        </div>
+
+        <button 
+          onClick={handleNext}
+          style={{
+            background: '#FF6B35',
+            border: 'none',
+            borderRadius: '50%',
+            width: '36px',
+            height: '36px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+            transition: 'transform 0.2s, background 0.2s'
+          }}
+          aria-label="Cabang Selanjutnya"
+          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <i className="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  );
+}
