@@ -206,7 +206,7 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
           margin-bottom: 3rem;
         }
         .menu-header-modern h2 {
-          font-size: 3rem;
+          font-size: clamp(2rem, 8vw, 3rem);
           color: #2B1717;
           margin-bottom: 1rem;
           font-weight: 800;
@@ -214,10 +214,11 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
         }
         .menu-header-modern p {
           color: #666;
-          font-size: 1.15rem;
+          font-size: 1.1rem;
+          padding: 0 10%;
         }
         .cat-pill {
-          padding: 10px 24px;
+          padding: 8px 20px;
           border-radius: 30px;
           border: 1px solid #e0e0e0;
           background: white;
@@ -225,6 +226,8 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
           cursor: pointer;
           font-weight: 600;
           transition: all 0.3s;
+          font-size: 0.9rem;
+          white-space: nowrap;
         }
         .cat-pill.active {
           background: #2B1717;
@@ -233,11 +236,16 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
         }
         .menu-grid-modern {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 2rem;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1.5rem;
           max-width: 1200px;
           margin: 0 auto;
-          padding: 0 5%;
+          padding: 0 1rem;
+        }
+        @media (max-width: 350px) {
+          .menu-grid-modern {
+            grid-template-columns: 1fr;
+          }
         }
         .menu-card-modern {
           background: white;
@@ -256,7 +264,7 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
         }
         .menu-img-wrapper {
           width: 100%;
-          height: 240px;
+          height: 200px;
           overflow: hidden;
           background: #f4f4f4;
         }
@@ -277,52 +285,52 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
           color: white;
           padding: 5px 12px;
           border-radius: 20px;
-          font-size: 0.8rem;
+          font-size: 0.75rem;
           font-weight: 700;
           z-index: 2;
           box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
         }
         .menu-content-modern {
-          padding: 1.5rem;
+          padding: 1.2rem;
           display: flex;
           flex-direction: column;
           flex: 1;
         }
         .menu-title-modern {
-          font-size: 1.3rem;
+          font-size: 1.2rem;
           font-weight: 700;
           color: #2B1717;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.4rem;
         }
         .menu-desc-modern {
           color: #777;
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           line-height: 1.5;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.2rem;
           flex: 1;
         }
         .menu-bottom-modern {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.2rem;
         }
         .menu-price-modern {
-          font-size: 1.25rem;
+          font-size: 1.2rem;
           font-weight: 800;
           color: #FF6B35;
         }
         .menu-rating-modern {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           color: #f39c12;
         }
         .menu-actions-modern {
           display: flex;
-          gap: 10px;
+          gap: 8px;
         }
         .btn-modern {
           flex: 1;
-          padding: 12px;
+          padding: 10px;
           border-radius: 12px;
           font-weight: 600;
           cursor: pointer;
@@ -330,8 +338,9 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
+          gap: 6px;
           transition: all 0.2s;
+          font-size: 0.95rem;
         }
         .btn-buy-modern {
           background: #2B1717;
@@ -364,7 +373,7 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
           top: 0; left: 0; width: 100%; height: 100%;
           background: rgba(0,0,0,0.6);
           backdrop-filter: blur(5px);
-          z-index: 1000;
+          z-index: 100000;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -378,8 +387,8 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
         }
         .modal-sleek-content {
           background: white;
-          width: 90%;
-          max-width: 500px;
+          width: 95%;
+          max-width: 480px;
           border-radius: 24px;
           overflow: hidden;
           transform: translateY(20px);
@@ -392,7 +401,7 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
           transform: translateY(0);
         }
         .modal-sleek-header {
-          padding: 1.5rem;
+          padding: 1.2rem;
           border-bottom: 1px solid #eee;
           display: flex;
           justify-content: space-between;
@@ -400,8 +409,9 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
         }
         .modal-sleek-header h3 {
           margin: 0;
-          font-size: 1.3rem;
+          font-size: 1.15rem;
           color: #2B1717;
+          font-weight: 800;
         }
         .modal-close {
           background: none;
@@ -411,16 +421,16 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
           color: #888;
         }
         .modal-sleek-body {
-          padding: 1.5rem;
+          padding: 1.2rem;
           overflow-y: auto;
         }
         .sleek-input {
           width: 100%;
-          padding: 12px 15px;
+          padding: 10px 14px;
           border: 1px solid #ddd;
-          border-radius: 12px;
-          font-size: 1rem;
-          margin-top: 5px;
+          border-radius: 10px;
+          font-size: 0.95rem;
+          margin-top: 4px;
           background: #fcfcfc;
           transition: border 0.3s;
         }
@@ -429,24 +439,24 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
           outline: none;
         }
         .sleek-label {
-          font-size: 0.9rem;
+          font-size: 0.85rem;
           font-weight: 600;
           color: #444;
         }
         .sleek-group {
-          margin-bottom: 1.2rem;
+          margin-bottom: 1rem;
         }
         .btn-submit-sleek {
           width: 100%;
-          padding: 15px;
+          padding: 14px;
           background: #FF6B35;
           color: white;
           border: none;
           border-radius: 12px;
-          font-size: 1.1rem;
+          font-size: 1rem;
           font-weight: 700;
           cursor: pointer;
-          margin-top: 1rem;
+          margin-top: 0.8rem;
           transition: background 0.3s;
         }
         .btn-submit-sleek:hover {
@@ -454,10 +464,29 @@ export default function MenuSection({ isDashboard = false }: { isDashboard?: boo
         }
         .sleek-summary {
           background: #f9f9f9;
-          padding: 15px;
+          padding: 12px;
           border-radius: 12px;
-          margin-bottom: 1rem;
-          font-size: 0.95rem;
+          margin-bottom: 0.8rem;
+          font-size: 0.9rem;
+        }
+        @media (max-width: 480px) {
+          .modal-sleek-content {
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            height: 95vh;
+            max-height: 95vh;
+            position: absolute;
+            bottom: 0;
+          }
+          .modal-sleek.active .modal-sleek-content {
+            transform: translateY(0);
+          }
+          .modal-sleek {
+            align-items: flex-end;
+          }
+          .menu-modern-section {
+            padding-bottom: 4rem;
+          }
         }
       `}</style>
 

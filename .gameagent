@@ -1,0 +1,482 @@
+```txt
+# .gameAgent
+# Svarga Dimsum Memory Card Event System
+# Secure Architecture Rules
+# Next.js + Vercel + Google Apps Script + Google Spreadsheet
+
+#################################################
+# CORE SYSTEM PRINCIPLE
+#################################################
+
+This system is:
+- frontend game + protected backend
+- NOT public spreadsheet architecture
+- NOT direct Apps Script architecture
+
+Main priority:
+1. Voucher security
+2. Apps Script secrecy
+3. Fair winner system
+4. Anti-cheat
+5. Spam protection
+
+#################################################
+# FINAL SYSTEM FLOW
+#################################################
+
+User
+↓
+Frontend Game (Next.js)
+↓
+Internal API Route (/api/game)
+↓
+Google Apps Script
+↓
+Google Spreadsheet
+
+STRICT RULE:
+Frontend MUST NEVER directly communicate with:
+- Spreadsheet
+- Apps Script URL
+
+#################################################
+# GAME CONCEPT
+#################################################
+
+Game type:
+- Memory Card Match
+
+Rules:
+- 30 seconds timer
+- 3 lives
+- wrong match closes card
+- all cards matched = win
+
+Reward:
+- voucher code
+
+Redeem:
+- directly at store
+OR
+- send voucher code to WhatsApp admin
+
+#################################################
+# DAILY WINNER SYSTEM
+#################################################
+
+Only 1 winner per day allowed.
+
+Flow:
+- game opens at 13:00 WIB
+- first valid winner gets voucher
+- game instantly closes
+- all other players rejected
+
+Frontend MUST show:
+🏆 Pemenang Hari Ini
+
+Required:
+- winner name
+- winning time
+
+Forbidden:
+- exposing full phone numbers
+- exposing private data
+
+#################################################
+# REQUIRED FORM
+#################################################
+
+Before game starts:
+user MUST input:
+
+Required:
+- nama
+- whatsapp
+
+Optional:
+- kota
+- instagram
+
+Validation:
+- whatsapp unique per day
+- no empty fields
+- sanitize input
+
+#################################################
+# GAME VALIDATION RULES
+#################################################
+
+Backend MUST validate:
+- current game hour
+- existing winner
+- duplicate players
+- fake requests
+- impossible completion time
+
+Frontend MUST NOT:
+- generate voucher
+- decide winner
+- store voucher list
+- validate reward
+
+#################################################
+# GAME SCHEDULE
+#################################################
+
+Timezone:
+Asia/Jakarta
+
+Open:
+13:00 WIB
+
+Close:
+17:00 WIB
+OR instantly after winner exists
+
+Backend MUST validate schedule.
+
+Frontend-only validation is forbidden.
+
+#################################################
+# REQUIRED ARCHITECTURE
+#################################################
+
+Allowed:
+
+Frontend
+↓
+Next.js API Route
+↓
+Apps Script
+↓
+Spreadsheet
+
+Forbidden:
+❌ Frontend -> Apps Script
+❌ Frontend -> Spreadsheet
+
+#################################################
+# APPS SCRIPT SECURITY
+#################################################
+
+Apps Script URL is SECRET.
+
+STRICT RULES:
+- NEVER expose Apps Script URL in frontend
+- NEVER use NEXT_PUBLIC for Apps Script
+- NEVER hardcode Apps Script URL in client components
+- NEVER call Apps Script directly from browser
+
+Apps Script URL MUST only exist in:
+.env.local
+
+Correct:
+
+GAME_API_URL=https://script.google.com/macros/s/AKfycbzda_0Oar-IEl6p0CdAQ2X9jIxncf7YGn0fHJO9LHYEWDD_oENsrTuPmklDMF-G0AcJ/exec
+
+GAME_SECRET=svarga_secret_2026
+
+Forbidden:
+NEXT_PUBLIC_GAME_API_URL=
+NEXT_PUBLIC_GAME_SECRET=
+
+#################################################
+# SPREADSHEET SECURITY
+#################################################
+
+Spreadsheet MUST:
+- remain private
+- NEVER be public
+- NEVER use "Anyone with link"
+
+Allowed access:
+- owner only
+
+Apps Script executes as:
+- owner account only
+
+Spreadsheet ID MUST NEVER:
+- appear in frontend
+- appear in browser network tab
+- appear in public repo
+- appear in client-side code
+
+#################################################
+# ENVIRONMENT VARIABLES
+#################################################
+
+Required:
+
+.env.local
+
+Variables:
+GAME_API_URL=
+GAME_SECRET=
+ADMIN_WHATSAPP=
+
+Forbidden:
+NEXT_PUBLIC_GAME_API_URL
+NEXT_PUBLIC_GAME_SECRET
+
+Secrets MUST stay server-side only.
+
+#################################################
+# NEXT.JS API SECURITY
+#################################################
+
+Frontend communicates ONLY with:
+
+/api/game
+
+Internal route responsibilities:
+- forward request to Apps Script
+- inject secret
+- sanitize payload
+- validate request
+
+Apps Script MUST reject requests without secret.
+
+#################################################
+# REQUIRED API ROUTES
+#################################################
+
+/api/game/status
+/api/game/start
+/api/game/finish
+/api/game/winner
+
+Frontend MUST NOT know:
+- Apps Script endpoints
+- Spreadsheet structure
+- Voucher pool
+
+#################################################
+# ANTI-CHEAT RULES
+#################################################
+
+Backend MUST reject:
+- repeated finish requests
+- impossible solve duration
+- manipulated payloads
+- duplicate WhatsApp
+- multiple wins
+
+Recommended:
+- signed session tokens
+- timestamp validation
+- cooldown logic
+
+#################################################
+# RATE LIMITING
+#################################################
+
+Per WhatsApp:
+- 1 play/day
+
+Per IP:
+- max 5 requests/day
+
+Required:
+- reject spam
+- reject brute force
+- log suspicious requests
+
+#################################################
+# VOUCHER SECURITY
+#################################################
+
+Voucher format:
+SVRGA-XXXX-XXXX
+
+Voucher states:
+- unused
+- used
+
+On claim:
+- instantly mark used
+- save winner data
+
+Forbidden:
+- predictable sequences
+- frontend voucher generation
+- exposing voucher list
+
+#################################################
+# REQUIRED SPREADSHEET STRUCTURE
+#################################################
+
+Required sheets:
+- players
+- vouchers
+- daily_winner
+- settings
+- logs
+
+#################################################
+# SHEET: players
+#################################################
+
+Columns:
+| id |
+| nama |
+| whatsapp |
+| ip |
+| status |
+| play_date |
+| created_at |
+
+status:
+- win
+- lose
+
+#################################################
+# SHEET: vouchers
+#################################################
+
+Columns:
+| code |
+| status |
+| claimed_by |
+| claimed_at |
+| player_ip |
+
+status:
+- unused
+- used
+
+#################################################
+# SHEET: daily_winner
+#################################################
+
+Columns:
+| tanggal |
+| nama |
+| whatsapp |
+| voucher |
+| waktu_menang |
+
+STRICT RULE:
+Only 1 row per day allowed.
+
+#################################################
+# SHEET: settings
+#################################################
+
+Columns:
+| key |
+| value |
+
+Default values:
+| game_open | true |
+| start_hour | 13 |
+| end_hour | 17 |
+
+#################################################
+# SHEET: logs
+#################################################
+
+Columns:
+| type |
+| message |
+| ip |
+| created_at |
+
+Required logs:
+- spam attempts
+- duplicate plays
+- invalid requests
+- fake finish attempts
+
+#################################################
+# FRONTEND REQUIREMENTS
+#################################################
+
+Required UI:
+- memory cards
+- countdown timer
+- lives counter
+- winner popup
+- game closed state
+- daily winner section
+
+Required messages:
+- already played
+- game closed
+- winner exists
+- victory
+- defeat
+
+#################################################
+# DEPLOYMENT RULES
+#################################################
+
+Hosting:
+- Vercel
+
+Production requirements:
+- HTTPS only
+- environment variables enabled
+- source maps disabled
+- remove debug logs
+
+#################################################
+# SEO & INDEXING SECURITY
+#################################################
+
+Sensitive backend endpoints MUST NOT be indexed.
+
+Required:
+robots.txt
+
+Rules:
+
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+
+Required headers:
+
+X-Robots-Tag: noindex, nofollow
+
+Apps Script URL MUST NEVER:
+- appear in HTML
+- appear in metadata
+- appear in sitemap
+- appear in robots
+- appear in frontend requests
+
+#################################################
+# GIT SECURITY
+#################################################
+
+Required:
+.gitignore
+
+Must ignore:
+.env
+.env.local
+.env.production
+
+Forbidden:
+- pushing secrets to GitHub
+- exposing Spreadsheet ID publicly
+- committing Apps Script URLs
+
+#################################################
+# FINAL DEVELOPMENT PRINCIPLE
+#################################################
+
+System philosophy:
+- simple
+- secure
+- maintainable
+- server-controlled
+
+Avoid:
+- overengineering
+- frontend trust
+- public backend exposure
+
+Because the moment a random teenager discovers browser DevTools, they immediately transform into a self-proclaimed cybersecurity specialist with unlimited free time.
+```

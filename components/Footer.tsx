@@ -105,13 +105,25 @@ export default function Footer() {
           font-size: 0.85rem;
         }
         @media (max-width: 1200px) {
-          .footer-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
+          .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
         }
         @media (max-width: 768px) {
-          .footer-grid { grid-template-columns: 1fr; text-align: center; }
+          .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+          .footer-brand { margin: 0 auto; max-width: 400px; }
           .footer-socials { justify-content: center; }
-          .footer-contact-item { justify-content: center; }
-          .footer-bottom { flex-direction: column; gap: 1rem; }
+          .footer-contact-item { justify-content: center; text-align: center; }
+          .footer-bottom { 
+            flex-direction: column; 
+            gap: 1rem; 
+            text-align: center; 
+            padding: 2rem 1rem;
+          }
+          .modern-footer { padding: 4rem 1rem 2rem; }
+        }
+        @media (max-width: 480px) {
+          .footer-brand h2 { font-size: 1.5rem; }
+          .footer-title { font-size: 1rem; margin-bottom: 1.2rem; }
+          .footer-bottom p { font-size: 0.8rem; margin: 0; }
         }
       `}</style>
 

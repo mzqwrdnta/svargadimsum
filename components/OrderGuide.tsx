@@ -26,7 +26,7 @@ export default function OrderGuide() {
           margin-bottom: 1rem;
         }
         .order-modern-header h2 {
-          font-size: 3rem;
+          font-size: clamp(2rem, 8vw, 3rem);
           color: #2B1717;
           font-weight: 800;
           letter-spacing: -1px;
@@ -34,13 +34,14 @@ export default function OrderGuide() {
         .order-modern-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 2rem;
+          gap: 1.5rem;
           max-width: 1200px;
           margin: 0 auto;
+          padding: 0 1rem;
         }
         .order-step-card {
           text-align: center;
-          padding: 2rem;
+          padding: 1.5rem;
           background: #fafafa;
           border-radius: 24px;
           transition: transform 0.3s, box-shadow 0.3s;
@@ -52,16 +53,16 @@ export default function OrderGuide() {
           background: #ffffff;
         }
         .order-step-icon {
-          width: 80px;
-          height: 80px;
-          margin: 0 auto 1.5rem;
+          width: 70px;
+          height: 70px;
+          margin: 0 auto 1.2rem;
           background: #FFF5F0;
           color: #FF6B35;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 2rem;
+          font-size: 1.8rem;
           transition: all 0.3s;
         }
         .order-step-card:hover .order-step-icon {
@@ -70,21 +71,27 @@ export default function OrderGuide() {
           transform: scale(1.1);
         }
         .order-step-title {
-          font-size: 1.25rem;
+          font-size: 1.15rem;
           font-weight: 700;
           color: #2B1717;
-          margin-bottom: 0.8rem;
+          margin-bottom: 0.6rem;
         }
         .order-step-desc {
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           color: #666;
-          line-height: 1.6;
+          line-height: 1.5;
         }
         @media (max-width: 991px) {
           .order-modern-grid { grid-template-columns: repeat(2, 1fr); }
         }
-        @media (max-width: 576px) {
-          .order-modern-grid { grid-template-columns: 1fr; }
+        @media (max-width: 480px) {
+          .order-modern-grid { 
+            grid-template-columns: 1fr; 
+            max-width: 320px;
+          }
+          .order-modern-header h2 {
+            font-size: 1.8rem;
+          }
         }
       `}</style>
 

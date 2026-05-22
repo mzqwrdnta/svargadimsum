@@ -32,7 +32,7 @@ export default function FooterOutletSlider() {
         style={{ 
           position: 'relative', 
           width: '100%', 
-          height: '180px', 
+          height: '160px', 
           borderRadius: '15px', 
           overflow: 'hidden',
           cursor: 'pointer',
@@ -58,23 +58,23 @@ export default function FooterOutletSlider() {
           right: 0,
           background: 'linear-gradient(transparent, rgba(0, 0, 0, 0.8))',
           color: 'white',
-          padding: '15px 10px 10px 10px',
+          padding: '12px 10px 10px 10px',
           textAlign: 'center',
         }}>
-          <h5 style={{ margin: 0, fontSize: '15px', fontWeight: 'bold' }}>{currentOutlet.name}</h5>
+          <h5 style={{ margin: 0, fontSize: '14px', fontWeight: 'bold' }}>{currentOutlet.name}</h5>
         </div>
       </div>
       
       {/* Controls below image */}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '15px' }}>
         <button 
           onClick={handlePrev}
           style={{
             background: '#FF6B35',
             border: 'none',
             borderRadius: '50%',
-            width: '36px',
-            height: '36px',
+            width: '32px',
+            height: '32px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -84,20 +84,18 @@ export default function FooterOutletSlider() {
             transition: 'transform 0.2s, background 0.2s'
           }}
           aria-label="Cabang Sebelumnya"
-          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
-          <i className="fas fa-chevron-left"></i>
+          <i className="fas fa-chevron-left" style={{ fontSize: '0.8rem' }}></i>
         </button>
         
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '6px' }}>
           {outlets.map((_, idx) => (
             <div 
               key={idx} 
               style={{
-                width: idx === currentIndex ? '24px' : '8px',
-                height: '8px',
-                borderRadius: '4px',
+                width: idx === currentIndex ? '18px' : '6px',
+                height: '6px',
+                borderRadius: '3px',
                 background: idx === currentIndex ? '#FF6B35' : '#E0E0E0',
                 transition: 'all 0.3s ease'
               }}
@@ -111,8 +109,8 @@ export default function FooterOutletSlider() {
             background: '#FF6B35',
             border: 'none',
             borderRadius: '50%',
-            width: '36px',
-            height: '36px',
+            width: '32px',
+            height: '32px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -122,10 +120,8 @@ export default function FooterOutletSlider() {
             transition: 'transform 0.2s, background 0.2s'
           }}
           aria-label="Cabang Selanjutnya"
-          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
-          <i className="fas fa-chevron-right"></i>
+          <i className="fas fa-chevron-right" style={{ fontSize: '0.8rem' }}></i>
         </button>
       </div>
     </div>

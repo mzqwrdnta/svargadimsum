@@ -145,17 +145,25 @@ export default function Header() {
         @media (max-width: 991px) {
           .nav-desktop { display: none; }
           .toggle-btn { display: flex; }
-          .original-style-header { padding: 1rem 2rem; }
+          .original-style-header { 
+            padding: 0.8rem 1.5rem; 
+            width: calc(100% - 20px);
+            top: 10px;
+          }
+          .logo-text {
+            font-size: 1.3rem;
+          }
           
           .nav-mobile {
+            display: block;
             position: fixed;
-            top: 100px;
-            left: 20px;
-            right: 20px;
+            top: 80px;
+            left: 10px;
+            right: 10px;
             background: #ffffff;
-            border-radius: 25px;
+            border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            padding: 1.5rem;
+            padding: 1rem;
             visibility: hidden;
             opacity: 0;
             transform: translateY(-10px);
@@ -175,21 +183,29 @@ export default function Header() {
             margin: 0;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.5rem;
           }
           .nav-mobile ul li a {
             display: block;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             color: #2B1717;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1.1rem;
-            border-radius: 15px;
+            font-size: 1rem;
+            border-radius: 12px;
             transition: all 0.3s;
           }
           .nav-mobile ul li a:hover, .nav-mobile ul li a.active {
             background: #FFF5F1;
             color: #FF6B35;
+          }
+        }
+        @media (max-width: 380px) {
+          .logo-text {
+            font-size: 1.1rem;
+          }
+          .original-style-header {
+            padding: 0.6rem 1rem;
           }
         }
       `}</style>

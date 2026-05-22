@@ -45,6 +45,12 @@ export default function AboutSection() {
             grid-template-columns: 1fr;
             text-align: center;
             gap: 3rem;
+            padding: 0 1rem;
+          }
+          .about-modern-stats { 
+            flex-direction: column; 
+            gap: 2rem; 
+            align-items: center; 
           }
         }
         .about-modern-image {
@@ -52,6 +58,8 @@ export default function AboutSection() {
           border-radius: 32px;
           overflow: hidden;
           box-shadow: 0 40px 80px rgba(0,0,0,0.08);
+          max-width: 500px;
+          margin: 0 auto;
         }
         .about-modern-image img {
           width: 100%;
@@ -64,72 +72,77 @@ export default function AboutSection() {
         }
         .about-modern-badge {
           position: absolute;
-          top: 30px;
-          right: 30px;
-          background: rgba(255, 255, 255, 0.85);
+          top: 20px;
+          right: 20px;
+          background: rgba(255, 255, 255, 0.9);
           backdrop-filter: blur(12px);
-          padding: 14px 28px;
+          padding: 10px 20px;
           border-radius: 50px;
           font-weight: 700;
           color: #FF6B35;
-          box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
           z-index: 2;
-          font-size: 0.95rem;
+          font-size: 0.85rem;
           letter-spacing: 0.5px;
         }
         .about-modern-content h4 {
           color: #FF6B35;
           text-transform: uppercase;
-          letter-spacing: 3px;
-          font-size: 0.9rem;
+          letter-spacing: 2px;
+          font-size: 0.8rem;
           font-weight: 800;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1rem;
           display: block;
         }
         .about-modern-content h2 {
-          font-size: 3.5rem;
+          font-size: clamp(2.2rem, 6vw, 3.5rem);
           color: #2B1717;
           line-height: 1.15;
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
           font-weight: 800;
           letter-spacing: -1.5px;
         }
-        @media (max-width: 768px) {
-          .about-modern-content h2 { font-size: 2.5rem; letter-spacing: -1px; }
-        }
         .about-modern-content p {
-          font-size: 1.15rem;
+          font-size: 1.05rem;
           color: #555;
-          line-height: 1.8;
-          margin-bottom: 3rem;
+          line-height: 1.7;
+          margin-bottom: 2.5rem;
         }
         .about-modern-stats {
           display: flex;
-          gap: 4rem;
+          gap: 3rem;
           border-top: 1px solid #f0f0f0;
-          padding-top: 2.5rem;
-        }
-        @media (max-width: 991px) {
-          .about-modern-stats { justify-content: center; gap: 3rem; }
+          padding-top: 2rem;
         }
         .stat-modern-box {
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 5px;
         }
         .stat-modern-number {
-          font-size: 3rem;
+          font-size: 2.5rem;
           font-weight: 800;
           color: #FF6B35;
           line-height: 1;
           letter-spacing: -1px;
         }
         .stat-modern-label {
-          font-size: 1rem;
+          font-size: 0.9rem;
           color: #888;
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 1px;
+        }
+        @media (max-width: 480px) {
+          .about-modern-section {
+            padding: 4rem 1rem;
+          }
+          .about-modern-content h2 {
+            font-size: 1.8rem;
+          }
+          .stat-modern-number {
+            font-size: 2rem;
+          }
         }
         .modern-reveal {
           opacity: 0;

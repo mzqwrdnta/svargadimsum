@@ -344,15 +344,15 @@ export default function HeroSection() {
           .hero-modern-container {
             flex-direction: column;
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 3rem;
             padding-bottom: 4rem;
           }
           .hero-modern-content {
             padding-right: 0;
             margin-bottom: 3rem;
           }
-          .hero-modern-content h1 { font-size: 2.8rem; }
-          .hero-modern-content p { font-size: 1.1rem; margin: 0 auto 1.5rem; }
+          .hero-modern-content h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
+          .hero-modern-content p { font-size: 1rem; margin: 0 auto 1.5rem; }
           .btn-modern-hero {
             padding: 14px 28px;
             font-size: 1rem;
@@ -362,6 +362,9 @@ export default function HeroSection() {
           .hero-cta-group {
             flex-direction: column;
             gap: 10px;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto 1.5rem;
           }
           .hero-image-wrapper {
             width: 280px;
@@ -373,9 +376,6 @@ export default function HeroSection() {
             font-size: 0.9rem;
             padding: 8px 16px;
           }
-          .hero-cta-group {
-            justify-content: center;
-          }
           .hero-trust-indicators {
             justify-content: center;
             flex-wrap: wrap;
@@ -384,6 +384,37 @@ export default function HeroSection() {
           }
           .trust-item {
             font-size: 0.8rem;
+          }
+        }
+        @media (max-width: 480px) {
+          .hero-modern {
+            padding-top: 80px;
+            min-height: auto;
+          }
+          .hero-modern-content h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+          }
+          .hero-image-wrapper {
+            width: 220px;
+            height: 220px;
+          }
+          .hero-thumbs-modern {
+            gap: 10px;
+            margin-top: 1.5rem;
+          }
+          .hero-thumb-item {
+            width: 60px;
+            height: 60px;
+          }
+        }
+        @media (max-width: 320px) {
+          .hero-modern-content h1 {
+            font-size: 1.8rem;
+          }
+          .hero-image-wrapper {
+            width: 180px;
+            height: 180px;
           }
         }
       `}</style>
