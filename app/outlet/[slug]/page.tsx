@@ -1,17 +1,27 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { outlets } from '@/data/outlets';
+import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+
 export async function generateStaticParams() {
-  return outlets.map((outlet) => ({
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  if (!supabaseUrl || !supabaseKey) return [];
+
+  const supabase = createSupabaseClient(supabaseUrl, supabaseKey);
+  const { data: outlets } = await supabase.from('outlets').select('slug').eq('is_active', true);
+  
+  return (outlets || []).map((outlet) => ({
     slug: outlet.slug,
   }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
-  const outlet = outlets.find((o) => o.slug === resolvedParams.slug);
+  const supabase = await createClient();
+  const { data: outlet } = await supabase.from('outlets').select('*').eq('slug', resolvedParams.slug).single();
   
   if (!outlet) {
     return { title: 'Outlet Tidak Ditemukan' };
@@ -40,7 +50,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function OutletDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const outlet = outlets.find((o) => o.slug === resolvedParams.slug);
+  const supabase = await createClient();
+  const { data: outlet } = await supabase.from('outlets').select('*').eq('slug', resolvedParams.slug).single();
 
   if (!outlet) {
     notFound();
@@ -267,7 +278,7 @@ export default async function OutletDetailPage({ params }: { params: Promise<{ s
                   <i className="fas fa-directions"></i> Petunjuk Arah
                 </a>
                 <a 
-                  href={`https://wa.me/${outlet.phone.replace(/[^0-9]/g, '')}`} 
+                  href={`https://wa.me/${outlet.phone?.replace(/[^0-9]/g, '')}`} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="detail-btn btn-secondary" 
@@ -281,7 +292,7 @@ export default async function OutletDetailPage({ params }: { params: Promise<{ s
           
           <div style={{ width: '100%', height: '450px', borderTop: '1px solid #f0f0f0' }}>
             <iframe 
-              src={outlet.mapUrl} 
+              src={outlet.map_url} 
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 

@@ -5,6 +5,7 @@ import GameGuide from '@/components/GameGuide';
 import OrderGuide from '@/components/OrderGuide';
 import MenuSection from '@/components/MenuSection';
 import TestimonialSlider from '@/components/TestimonialSlider';
+import ReviewSection from '@/components/ReviewSection';
 
 export const metadata: Metadata = {
   title: 'Home | Svarga Dimsum',
@@ -20,7 +21,7 @@ export default function Home() {
       <OrderGuide />
       <MenuSection isDashboard={true} />
       <GameGuide />
-      <TestimonialSlider />
+      <ReviewSection />
     </>
   );
 }

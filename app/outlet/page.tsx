@@ -1,13 +1,16 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { outlets } from '@/data/outlets';
+import { createClient } from '@/utils/supabase/server';
 
 export const metadata: Metadata = {
   title: 'Daftar Outlet | Svarga Dimsum',
   description: 'Temukan lokasi cabang Svarga Dimsum terdekat dari tempat Anda. Tersedia di Depok, Bogor, dan sekitarnya.',
 };
 
-export default function OutletListPage() {
+export default async function OutletListPage() {
+  const supabase = await createClient();
+  const { data: outlets } = await supabase.from('outlets').select('*').eq('is_active', true).order('sort_order', { ascending: true });
+
   return (
     <>
       <h1 className="sr-only">Daftar Outlet Cabang Svarga Dimsum</h1>
@@ -66,7 +69,7 @@ export default function OutletListPage() {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '3rem', maxWidth: '1200px', margin: '0 auto' }}>
-          {outlets.map((outlet) => (
+          {(outlets || []).map((outlet) => (
             <div key={outlet.slug} className="outlet-card-modern">
               <div className="img-wrapper">
                 <img 

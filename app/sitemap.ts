@@ -1,10 +1,16 @@
 import type { MetadataRoute } from 'next';
-import { outlets } from '@/data/outlets';
+import { createClient } from '@supabase/supabase-js';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://svargadimsum.com';
+  
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const outletRoutes = outlets.map((outlet) => ({
+  const { data: outlets } = await supabase.from('outlets').select('slug').eq('is_active', true);
+
+  const outletRoutes = (outlets || []).map((outlet) => ({
     url: `${baseUrl}/outlet/${outlet.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,

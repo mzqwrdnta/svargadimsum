@@ -1,7 +1,26 @@
 import FooterOutletSlider from './FooterOutletSlider';
 import Link from 'next/link';
+import { createClient } from '@/utils/supabase/server';
 
-export default function Footer() {
+export default async function Footer() {
+  const supabase = await createClient();
+  const { data: outlets } = await supabase.from('outlets').select('*').eq('is_active', true).order('sort_order', { ascending: true });
+  const { data: settings } = await supabase.from('site_settings').select('*');
+
+  const settingsObj = settings?.reduce((acc, curr) => {
+    acc[curr.key] = curr.value;
+    return acc;
+  }, {}) || {};
+
+  const contactInfo = settingsObj.contact_info || { address: 'Jl. Raya Abdul Gani No.2 Blok B, Depok', phone: '+62 852-1396-3005', email: 'hello@svargadimsum.com' };
+  const socialLinks = settingsObj.social_links || [
+    { name: 'Instagram', url: 'https://www.instagram.com/svarga.foodies/', icon: 'fa-instagram' },
+    { name: 'WhatsApp', url: 'https://wa.me/6285213963005', icon: 'fa-whatsapp' }
+  ];
+
+  const instagramLink = socialLinks.find((l: any) => l.name.toLowerCase().includes('instagram'))?.url || 'https://www.instagram.com/svarga.foodies/';
+  const whatsappLink = socialLinks.find((l: any) => l.name.toLowerCase().includes('whatsapp'))?.url || 'https://wa.me/6285213963005';
+
   return (
     <footer className="modern-footer" id="kontak">
       <style>{`
@@ -132,10 +151,10 @@ export default function Footer() {
           <h2>SVARGA<span>DIMSUM</span></h2>
           <p>Dimsum premium dengan cita rasa autentik. Dibuat dengan bahan berkualitas untuk kepuasan Anda.</p>
           <div className="footer-socials">
-            <a href="https://www.instagram.com/svarga.foodies/" target="_blank" rel="noopener noreferrer" className="social-icon">
+            <a href={instagramLink} target="_blank" rel="noopener noreferrer" className="social-icon">
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="https://wa.me/6285213963005" target="_blank" rel="noopener noreferrer" className="social-icon">
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="social-icon">
               <i className="fab fa-whatsapp"></i>
             </a>
           </div>
@@ -155,21 +174,21 @@ export default function Footer() {
           <h4 className="footer-title">Kontak</h4>
           <div className="footer-contact-item">
             <i className="fas fa-map-marker-alt"></i>
-            <span>Jl. Raya Abdul Gani No.2 Blok B, Depok</span>
+            <span>{contactInfo.address}</span>
           </div>
           <div className="footer-contact-item">
             <i className="fas fa-phone-alt"></i>
-            <span>+62 852-1396-3005</span>
+            <span>{contactInfo.phone}</span>
           </div>
           <div className="footer-contact-item">
             <i className="fas fa-envelope"></i>
-            <span>hello@svargadimsum.com</span>
+            <span>{contactInfo.email}</span>
           </div>
         </div>
 
         <div className="footer-outlets" id="outlet">
           <h4 className="footer-title">Cabang Kami</h4>
-          <FooterOutletSlider />
+          <FooterOutletSlider outlets={outlets || []} />
         </div>
       </div>
 

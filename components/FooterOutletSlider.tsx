@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { outlets } from '@/data/outlets';
 
-export default function FooterOutletSlider() {
+export default function FooterOutletSlider({ outlets }: { outlets: any[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
+
+  if (!outlets || outlets.length === 0) return null;
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => 

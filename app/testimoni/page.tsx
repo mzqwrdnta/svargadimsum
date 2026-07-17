@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import TestimonialSlider from '@/components/TestimonialSlider';
+import ReviewSection from '@/components/ReviewSection';
 
 export const metadata: Metadata = {
   title: 'Testimoni Pelanggan | Svarga Dimsum',
@@ -11,7 +12,7 @@ export default function TestimoniPage() {
     <>
       <h1 className="sr-only">Testimoni Pelanggan Svarga Dimsum</h1>
       <div style={{ paddingTop: '8rem' }}>
-        <TestimonialSlider />
+        <ReviewSection />
       </div>
     </>
   );
